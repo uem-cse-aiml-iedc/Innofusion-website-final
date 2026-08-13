@@ -1,0 +1,835 @@
+/*
+ * InnoFusion 3.0 - global stylesheet
+ *
+ * Structure:
+ *   1. Font faces
+ *   2. Design tokens (colour, elevation, motion, radii)
+ *   3. Base element styles + accessibility defaults
+ *   4. Component layer (panels, buttons, resource bars, textures)
+ *   5. Keyframes actually referenced by components
+ *
+ * Web fonts are linked from index.html rather than @import-ed here, so the
+ * browser's preload scanner can start those requests before this file parses.
+ */
+
+/* ------------------------------------------------------------------ *
+ * 1. Font faces
+ * ------------------------------------------------------------------ */
+
+@font-face {
+  font-family: 'Supercell-Magic';
+  src: url('/supercell-magic.woff2') format('woff2'),
+       url('/supercell-magic.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Clash Regular';
+  src: url('/Clash_Regular.woff2') format('woff2'),
+       url('/Clash_Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ------------------------------------------------------------------ *
+ * 2. Design tokens
+ * ------------------------------------------------------------------ */
+
+@layer base {
+  :root {
+    /*
+     * --- Brand palette ------------------------------------------------
+     * "Premium Modern Fantasy" rather than the earlier neon-Clash mix: the
+     * hues stay recognisably Clash (gold, elixir pink/purple, gem green)
+     * but desaturated off the laser-bright originals - matte brass instead
+     * of traffic-sign yellow, plum instead of hot magenta, muted emerald
+     * instead of highlighter green. These are used as accents and glows
+     * now, not solid UI blocks.
+     */
+    --elixir-pink: 300 38% 42%;
+    --gold-coin: 40 68% 52%;
+    --gem-green: 152 42% 39%;
+    --dark-elixir: 270 22% 9%;
+    --wall-stone: 30 14% 32%;
+    --grass-green: 95 30% 32%;
+    --wood-brown: 25 40% 22%;
+    --parchment: 38 35% 88%;
+    --sky-blue: 200 55% 52%;
+    --fire-orange: 25 75% 48%;
+    --lightning-blue: 195 65% 48%;
+
+    /* --- Semantic tokens -------------------------------------------- */
+    /*
+     * Deep obsidian rather than a neutral near-black: a faint warm
+     * brown/grey hue keeps the page from reading as pure #000 studio
+     * black, which is what "obsidian" asks for over flat charcoal.
+     */
+    /* Exactly #0a0a0c — every section's gradient starts and ends on this
+       value so section boundaries have nothing to reveal. */
+    --background: 240 9% 4.3%;
+    --foreground: 40 12% 95%;
+
+    --card: 30 7% 8%;
+    --card-foreground: 40 12% 95%;
+
+    --popover: 30 7% 7%;
+    --popover-foreground: 40 12% 95%;
+
+    --primary: 40 68% 55%;
+    --primary-foreground: 0 0% 6%;
+
+    --secondary: 300 38% 42%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 30 6% 12%;
+    /* 72% on a near-black surface clears WCAG AA for body copy. */
+    --muted-foreground: 40 8% 72%;
+
+    --accent: 152 42% 41%;
+    --accent-foreground: 0 0% 6%;
+
+    --destructive: 0 65% 52%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Hairline borders: a light grey rather than the old brown woodgrain. */
+    --border: 30 8% 17%;
+    --input: 30 6% 14%;
+    --ring: 40 68% 58%;
+
+    --radius: 0.75rem;
+
+    /* --- Gradients --------------------------------------------------- */
+    --gradient-gold: linear-gradient(180deg, hsl(42 72% 62%) 0%, hsl(36 68% 44%) 100%);
+    --gradient-elixir: linear-gradient(180deg, hsl(300 55% 58%) 0%, hsl(297 50% 38%) 100%);
+    --gradient-gem: linear-gradient(180deg, hsl(152 48% 46%) 0%, hsl(155 46% 29%) 100%);
+    /*
+     * Surfaces are near-black now. The wood and stone gradients are retained
+     * as names so existing markup keeps working, but they resolve to dark
+     * neutrals - the Clash character comes from the artwork sitting on top,
+     * not from brown panels behind it.
+     */
+    --gradient-stone: linear-gradient(180deg, hsl(30 7% 11%) 0%, hsl(30 7% 7%) 100%);
+    --gradient-wood: linear-gradient(180deg, hsl(30 7% 10%) 0%, hsl(30 7% 6%) 100%);
+    --gradient-wood-night: var(--gradient-wood);
+
+    /*
+     * Elevation. Layered shadows read as depth far better than one large
+     * blur, and the warm tint keeps surfaces from looking grey.
+     */
+    --elev-1: 0 1px 2px hsl(25 40% 4% / 0.4), 0 2px 6px hsl(25 40% 4% / 0.28);
+    --elev-2: 0 2px 4px hsl(25 40% 4% / 0.4), 0 6px 16px hsl(25 40% 4% / 0.32);
+    --elev-3: 0 4px 8px hsl(25 40% 4% / 0.42), 0 14px 34px hsl(25 40% 4% / 0.38);
+    --elev-4: 0 8px 16px hsl(25 40% 4% / 0.44), 0 26px 60px hsl(25 40% 4% / 0.44);
+
+    /* Chunky bottom edge that gives CoC buttons their pressable feel. */
+    --lip-gold: 0 5px 0 hsl(34 55% 28%);
+    --lip-gem: 0 5px 0 hsl(155 46% 18%);
+    --lip-elixir: 0 5px 0 hsl(297 50% 23%);
+
+    /* Glows - the "magic" mechanism now that solid neon blocks are gone. */
+    --glow-gold: 0 0 28px hsl(40 68% 55% / 0.30);
+    --glow-elixir: 0 0 28px hsl(300 52% 52% / 0.30);
+    --glow-gem: 0 0 28px hsl(152 42% 42% / 0.30);
+    --glow-purple: 0 0 28px hsl(270 55% 58% / 0.30);
+
+    /* --- Motion ------------------------------------------------------ */
+    --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+    --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+    --dur-fast: 140ms;
+    --dur-base: 220ms;
+    --dur-slow: 380ms;
+
+    /* --- Sidebar (shadcn) --------------------------------------------- */
+    --sidebar-background: 26 20% 13%;
+    --sidebar-foreground: 42 30% 92%;
+    --sidebar-primary: 45 100% 51%;
+    --sidebar-primary-foreground: 25 40% 10%;
+    --sidebar-accent: 28 14% 20%;
+    --sidebar-accent-foreground: 42 30% 92%;
+    --sidebar-border: 30 34% 22%;
+    --sidebar-ring: 45 100% 55%;
+  }
+
+  .dark {
+    --background: 25 24% 7%;
+    --card: 28 14% 12%;
+    --popover: 26 18% 10%;
+    --muted: 28 10% 17%;
+    --muted-foreground: 42 18% 74%;
+    --border: 30 30% 20%;
+    --input: 28 12% 17%;
+  }
+
+  /* Builder Base palette shift, applied by ThemeContext on <html>. */
+  .night-theme {
+    --border: 268 32% 30%;
+    --ring: 270 90% 68%;
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ * 3. Base elements
+ * ------------------------------------------------------------------ */
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* Clears the fixed desktop navbar when jumping to an anchor. */
+    scroll-padding-top: 6.5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body;
+    /* clip rather than hidden: does not create a scroll container, so
+       position: sticky keeps working inside sections. */
+    overflow-x: clip;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /*
+   * Site-wide custom cursor — a short sword tilted toward the left, hotspot
+   * set at its tip (1, 0) so clicks register where the point is, not the
+   * handle. `!important` because Tailwind's `cursor-pointer` utility (used
+   * on most buttons/links) is a class selector and would otherwise beat a
+   * plain `*` rule.
+   */
+  *, *::before, *::after {
+    cursor: url('/sword-cursor.png') 1 0, auto !important;
+  }
+
+  /* Text fields keep the native I-beam so it's still obvious they're typable. */
+  input, textarea, [contenteditable="true"] {
+    cursor: text !important;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+    text-wrap: balance;
+    line-height: 1.12;
+    letter-spacing: 0.01em;
+  }
+
+  p, li {
+    text-wrap: pretty;
+  }
+
+  /* Media defaults - block display removes the inline-descender gap. */
+  img, svg, video, canvas {
+    display: block;
+    max-width: 100%;
+  }
+
+  img {
+    height: auto;
+  }
+
+  /* --- Focus -------------------------------------------------------- */
+  :focus-visible {
+    outline: 3px solid hsl(var(--ring));
+    outline-offset: 3px;
+    border-radius: 0.375rem;
+  }
+
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  .night-theme :focus-visible {
+    outline-color: hsl(270 90% 70%);
+  }
+
+  /* Skip link, revealed on keyboard focus. */
+  .skip-link {
+    position: fixed;
+    top: 0.75rem;
+    left: 0.75rem;
+    z-index: 100;
+    transform: translateY(-200%);
+    transition: transform var(--dur-base) var(--ease-out);
+    @apply bg-primary text-primary-foreground font-body font-bold px-4 py-2 rounded-lg;
+    box-shadow: var(--elev-3);
+  }
+
+  .skip-link:focus-visible {
+    transform: translateY(0);
+  }
+
+  /* --- Scrollbar ---------------------------------------------------- */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--gold-coin) / 0.7) hsl(var(--dark-elixir));
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--dark-elixir));
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, hsl(var(--gold-coin)) 0%, hsl(30 62% 34%) 100%);
+    border-radius: 999px;
+    border: 2px solid hsl(var(--dark-elixir));
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, hsl(48 100% 62%) 0%, hsl(var(--gold-coin)) 100%);
+  }
+
+  .night-theme ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, hsl(270 90% 65%) 0%, hsl(266 60% 34%) 100%);
+  }
+
+  /* --- Reduced motion ------------------------------------------------ */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* The intro screen suppresses any custom cursor treatment. */
+  .intro-page,
+  .intro-page * {
+    cursor: default !important;
+  }
+
+  /* iOS notch padding, used by the mobile bottom nav. */
+  @supports (padding-bottom: env(safe-area-inset-bottom)) {
+    .pb-safe {
+      padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 0.25rem);
+    }
+  }
+
+  @media (max-width: 360px) {
+    html {
+      font-size: 15px;
+    }
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ * 4. Components
+ * ------------------------------------------------------------------ */
+
+@layer components {
+
+  /* --- Surfaces: dark glassmorphism ------------------------------------ */
+
+  /*
+   * "Dark Glass" - the shared card language for the redesign. Near-black
+   * glass at ~5% white, a blur of whatever sits behind it, and a hairline
+   * border in translucent brass rather than a solid stroke. This is what
+   * every panel/card class below resolves to; components that already use
+   * .panel-wood, .card-stone or .glass pick up the new look with no
+   * per-component changes.
+   */
+  .panel-wood,
+  .panel-wood-night {
+    @apply relative rounded-2xl p-4;
+    /* Opaque fallback; browsers without backdrop-filter get a solid dark
+       panel instead of a near-invisible 5%-white wash with nothing behind
+       it to blur. */
+    background: hsl(30 7% 8% / 0.92);
+    border: 1px solid hsl(var(--gold-coin) / 0.22);
+    box-shadow:
+      inset 0 1px 0 hsl(0 0% 100% / 0.06),
+      var(--elev-2);
+  }
+
+  @supports (backdrop-filter: blur(12px)) or (-webkit-backdrop-filter: blur(12px)) {
+
+    .panel-wood,
+    .panel-wood-night {
+      background: hsl(0 0% 100% / 0.05);
+      -webkit-backdrop-filter: blur(14px) saturate(1.1);
+      backdrop-filter: blur(14px) saturate(1.1);
+    }
+  }
+
+  /*
+   * Navbar surface. Same glass language as .panel-wood but at lower opacity
+   * so the page content is still legible scrolling underneath the fixed
+   * header instead of a flat panel that hard-cuts the content below it.
+   */
+  .nav-glass {
+    @apply relative rounded-2xl p-4;
+    background: rgba(10, 10, 12, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid rgba(232, 197, 71, 0.18);
+    box-shadow:
+      inset 0 1px 0 hsl(0 0% 100% / 0.05),
+      0 8px 32px rgba(0, 0, 0, 0.4);
+  }
+
+  @supports (backdrop-filter: blur(12px)) or (-webkit-backdrop-filter: blur(12px)) {
+    .nav-glass {
+      -webkit-backdrop-filter: blur(16px) saturate(1.2);
+      backdrop-filter: blur(16px) saturate(1.2);
+    }
+  }
+
+  /* Same glass, a neutral grey-glass hairline instead of brass - the
+     "grey border" alternative for cards where gold would compete with the
+     content (sponsor tiles, stat cards). */
+  .card-stone {
+    @apply relative rounded-2xl p-6;
+    background: hsl(30 7% 8% / 0.92);
+    border: 1px solid hsl(0 0% 100% / 0.12);
+    box-shadow:
+      inset 0 1px 0 hsl(0 0% 100% / 0.06),
+      var(--elev-2);
+  }
+
+  @supports (backdrop-filter: blur(12px)) or (-webkit-backdrop-filter: blur(12px)) {
+    .card-stone {
+      background: hsl(0 0% 100% / 0.05);
+      -webkit-backdrop-filter: blur(14px) saturate(1.1);
+      backdrop-filter: blur(14px) saturate(1.1);
+    }
+  }
+
+  /*
+   * Frosted surface for overlays and stat chips. Falls back to a solid
+   * tint where backdrop-filter is unsupported so text stays readable.
+   */
+  .glass {
+    /* Fallback for browsers without backdrop-filter: an opaque near-black
+       tint, since a 5%-white fill with nothing to blur reads as almost no
+       surface at all and text loses its background. */
+    background: hsl(30 7% 8% / 0.85);
+    border: 1px solid hsl(0 0% 100% / 0.1);
+    box-shadow: var(--elev-2), inset 0 1px 0 hsl(0 0% 100% / 0.07);
+  }
+
+  @supports (backdrop-filter: blur(12px)) or (-webkit-backdrop-filter: blur(12px)) {
+    .glass {
+      background: hsl(0 0% 100% / 0.05);
+      -webkit-backdrop-filter: blur(16px) saturate(1.2);
+      backdrop-filter: blur(16px) saturate(1.2);
+    }
+  }
+
+  /*
+   * Hero glass pill — the "30-Hour..." tag becomes a translucent
+   * pill with a subtle glowing gold edge instead of a solid shape.
+   */
+  .hero-glass-pill {
+    background: rgba(10, 10, 12, 0.45);
+    border: 1px solid rgba(232, 197, 71, 0.25);
+    box-shadow:
+      0 0 18px rgba(232, 197, 71, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+
+  @supports (backdrop-filter: blur(12px)) or (-webkit-backdrop-filter: blur(12px)) {
+    .hero-glass-pill {
+      -webkit-backdrop-filter: blur(14px) saturate(1.2);
+      backdrop-filter: blur(14px) saturate(1.2);
+    }
+  }
+
+  /*
+   * Hero glass CTA buttons — dark frosted glass instead of solid
+   * white/blurple pills. Subtle border glow on hover.
+   */
+  .hero-glass-btn {
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow:
+      0 4px 16px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    cursor: pointer;
+  }
+
+  .hero-glass-btn:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(232, 197, 71, 0.4);
+    box-shadow:
+      0 0 24px rgba(232, 197, 71, 0.12),
+      0 4px 16px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transform: translateY(-1px);
+  }
+
+  @supports (backdrop-filter: blur(12px)) or (-webkit-backdrop-filter: blur(12px)) {
+    .hero-glass-btn {
+      -webkit-backdrop-filter: blur(16px) saturate(1.2);
+      backdrop-filter: blur(16px) saturate(1.2);
+    }
+  }
+
+  /*
+   * Section background blending.
+   *
+   * Several sections paint their own opaque backdrop (the War Map's brown,
+   * the ID card's purple, the footer's dark elixir). Butted against the
+   * page's flat black those produced a visible horizontal seam - one colour
+   * simply stopped and the next began. These utilities mask the backdrop
+   * layer's alpha to zero at its top and bottom edges, so each section's
+   * colour dissolves into the page black instead of ending on a hard line.
+   *
+   * Applied to the absolutely-positioned backdrop div, never to the section
+   * itself, so the text and controls above it stay at full opacity.
+   */
+  .blend-y {
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%);
+  }
+
+  .blend-y-top {
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 14%);
+    mask-image: linear-gradient(to bottom, transparent 0%, black 14%);
+  }
+
+  .blend-y-bottom {
+    -webkit-mask-image: linear-gradient(to bottom, black 86%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 86%, transparent 100%);
+  }
+
+  /*
+   * Ambient light pool. Used sparingly behind the hero and section headings
+   * so a full-black page still has some depth. A radial gradient costs
+   * nothing to paint and does not need an image.
+   */
+  .glow-pool {
+    background:
+      radial-gradient(60% 50% at 50% 0%, hsl(45 100% 55% / 0.10) 0%, transparent 70%);
+  }
+
+  /*
+   * Pinned caption tag. A small handwritten aside next to a character - the
+   * one piece of the "corkboard" reference site's language we borrowed,
+   * reskinned in our own dark-glass/brass palette rather than its warm red.
+   * Pair with a Tailwind rotate-* utility on the instance (rotate-2,
+   * -rotate-3, ...) so captions don't all tilt the same way.
+   */
+  .pin-tag {
+    @apply inline-block font-handwritten text-lg sm:text-xl px-3 py-1 rounded-md;
+    color: hsl(var(--gold-coin) / 0.95);
+    background: hsl(0 0% 100% / 0.05);
+    border: 1px solid hsl(var(--gold-coin) / 0.25);
+    box-shadow: var(--elev-1);
+  }
+
+  /* Hairline separator with a warm falloff at each end. */
+  .rule-gold {
+    height: 1px;
+    background: linear-gradient(90deg,
+        transparent,
+        hsl(var(--gold-coin) / 0.55) 25%,
+        hsl(var(--gold-coin) / 0.55) 75%,
+        transparent);
+  }
+
+  /* --- Textures ------------------------------------------------------ */
+
+  /*
+   * Wood grain drawn with gradients. Replaces the old /wood-texture.webp
+   * request, which 404-ed in production.
+   */
+  .texture-wood {
+    background-image:
+      repeating-linear-gradient(92deg,
+        hsl(25 45% 12% / 0.55) 0px,
+        hsl(25 45% 12% / 0) 2px,
+        hsl(25 45% 12% / 0) 7px,
+        hsl(25 45% 12% / 0.4) 9px),
+      repeating-linear-gradient(88deg,
+        hsl(38 50% 60% / 0.18) 0px,
+        hsl(38 50% 60% / 0) 3px,
+        hsl(38 50% 60% / 0) 14px);
+  }
+
+  /* --- Buttons -------------------------------------------------------- */
+
+  .btn-3d {
+    @apply relative inline-flex items-center justify-center gap-2;
+    @apply font-display uppercase tracking-wide;
+    @apply px-7 py-3.5 rounded-xl;
+    font-size: clamp(0.875rem, 0.8rem + 0.35vw, 1.0625rem);
+    text-shadow: 0 2px 0 hsl(25 50% 10% / 0.35);
+    transition:
+      transform var(--dur-fast) var(--ease-out),
+      box-shadow var(--dur-fast) var(--ease-out),
+      filter var(--dur-fast) var(--ease-out);
+    /* Removes the 300ms tap delay on iOS. */
+    touch-action: manipulation;
+    isolation: isolate;
+  }
+
+  /* Soft top-edge sheen shared by every 3D button variant. */
+  .btn-3d::before {
+    content: '';
+    position: absolute;
+    inset: 1px 1px auto;
+    height: 42%;
+    border-radius: inherit;
+    background: linear-gradient(180deg, hsl(0 0% 100% / 0.28), hsl(0 0% 100% / 0));
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .btn-3d:hover {
+    transform: translateY(-2px);
+    filter: saturate(1.06);
+  }
+
+  .btn-3d:active {
+    transform: translateY(3px);
+  }
+
+  .btn-3d:disabled,
+  .btn-3d[aria-disabled='true'] {
+    transform: none;
+    filter: grayscale(0.5);
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+
+  .btn-3d-gold {
+    @apply btn-3d;
+    color: hsl(25 45% 12%);
+    background: var(--gradient-gold);
+    box-shadow: var(--lip-gold), var(--elev-2);
+  }
+
+  .btn-3d-gold:hover {
+    box-shadow: var(--lip-gold), var(--elev-3), var(--glow-gold);
+  }
+
+  .btn-3d-gold:active {
+    box-shadow: 0 1px 0 hsl(34 78% 30%), var(--elev-1);
+  }
+
+  .btn-3d-green {
+    @apply btn-3d;
+    color: hsl(150 60% 10%);
+    background: var(--gradient-gem);
+    box-shadow: var(--lip-gem), var(--elev-2);
+  }
+
+  .btn-3d-green:hover {
+    box-shadow: var(--lip-gem), var(--elev-3), var(--glow-gem);
+  }
+
+  .btn-3d-green:active {
+    box-shadow: 0 1px 0 hsl(152 72% 19%), var(--elev-1);
+  }
+
+  .btn-3d-elixir {
+    @apply btn-3d text-white;
+    background: var(--gradient-elixir);
+    box-shadow: var(--lip-elixir), var(--elev-2);
+  }
+
+  .btn-3d-elixir:hover {
+    box-shadow: var(--lip-elixir), var(--elev-3), var(--glow-elixir);
+  }
+
+  .btn-3d-elixir:active {
+    box-shadow: 0 1px 0 hsl(304 72% 24%), var(--elev-1);
+  }
+
+  /* --- Interactive card ------------------------------------------------ */
+
+  .card-lift {
+    transition:
+      transform var(--dur-base) var(--ease-out),
+      box-shadow var(--dur-base) var(--ease-out),
+      border-color var(--dur-base) var(--ease-out);
+  }
+
+  /* Hover lift only where a real pointer exists, so touch devices do not
+     get stuck in a hover state after a tap. */
+  @media (hover: hover) and (pointer: fine) {
+    .card-lift:hover {
+      transform: translateY(-4px);
+      /* Elevation plus a soft, diffused glow behind the card - the "magic"
+         cue the flat colour blocks used to carry. */
+      box-shadow: var(--elev-4), 0 0 44px hsl(var(--gold-coin) / 0.16);
+      border-color: hsl(var(--gold-coin) / 0.45);
+    }
+
+    .night-theme .card-lift:hover {
+      border-color: hsl(270 90% 68% / 0.45);
+    }
+  }
+
+  .card-lift:focus-within {
+    box-shadow: var(--elev-4);
+  }
+
+  /* --- Resource bars ---------------------------------------------------- */
+
+  .resource-bar {
+    @apply relative h-7 rounded-full overflow-hidden;
+    background: hsl(25 30% 10%);
+    border: 2px solid hsl(30 40% 24%);
+    box-shadow: inset 0 2px 6px hsl(25 50% 4% / 0.6);
+  }
+
+  .resource-fill {
+    @apply absolute inset-y-0 left-0 rounded-full;
+    transition: width 1.2s var(--ease-out);
+  }
+
+  .resource-fill::after {
+    content: '';
+    position: absolute;
+    inset: 1px 1px auto;
+    height: 45%;
+    border-radius: 999px;
+    background: linear-gradient(180deg, hsl(0 0% 100% / 0.3), hsl(0 0% 100% / 0));
+  }
+
+  .resource-fill-gold {
+    background: var(--gradient-gold);
+    box-shadow: var(--glow-gold);
+  }
+
+  .resource-fill-elixir {
+    background: var(--gradient-elixir);
+    box-shadow: var(--glow-elixir);
+  }
+
+  .resource-fill-gem {
+    background: var(--gradient-gem);
+    box-shadow: var(--glow-gem);
+  }
+
+  /* --- Text treatments --------------------------------------------------- */
+
+  .text-glow-gold {
+    text-shadow:
+      0 2px 0 hsl(30 60% 18%),
+      0 0 18px hsl(45 100% 55% / 0.45);
+  }
+
+  .text-glow-elixir {
+    text-shadow:
+      0 2px 0 hsl(304 70% 18%),
+      0 0 18px hsl(307 100% 52% / 0.45);
+  }
+
+  /* Gold foil heading fill. */
+  .text-foil-gold {
+    background: linear-gradient(180deg,
+        hsl(50 100% 76%) 0%,
+        hsl(45 100% 56%) 45%,
+        hsl(36 92% 44%) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 2px 3px hsl(25 60% 8% / 0.55));
+  }
+
+  /* --- Motion helpers ----------------------------------------------------- */
+
+  .animate-float {
+    animation: float 4s var(--ease-in-out) infinite;
+  }
+
+  .character-idle {
+    animation: idle-breathe 3.6s var(--ease-in-out) infinite;
+    transform-origin: bottom center;
+  }
+
+  /*
+   * Opt-in layer promotion. Apply immediately before an animation and remove
+   * afterwards; a permanent will-change costs memory and can slow
+   * compositing rather than help it.
+   */
+  .gpu {
+    will-change: transform;
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ * 5. Keyframes
+ * ------------------------------------------------------------------ */
+
+@layer components {
+  @keyframes float {
+    0%, 100% { transform: translate3d(0, 0, 0); }
+    50% { transform: translate3d(0, -9px, 0); }
+  }
+
+  @keyframes idle-breathe {
+    0%, 100% { transform: scaleY(1) translate3d(0, 0, 0); }
+    50% { transform: scaleY(1.02) translate3d(0, -3px, 0); }
+  }
+
+  /*
+   * Decorative bobbing for the floating troop sprites.
+   *
+   * These used to be framer-motion `animate={{ y: [...] }}` loops with
+   * `repeat: Infinity`. framer-motion drives keyframes from JS on the main
+   * thread via requestAnimationFrame, and the page renders dozens of these
+   * at once (one per mentor/judge/hackpeer card, per track card, per
+   * sponsor tile). Several hundred concurrent main-thread animations is
+   * enough to visibly cost frames while scrolling, which was very
+   * noticeable in Safari.
+   *
+   * As a plain CSS transform animation the browser runs each one on the
+   * compositor instead, off the main thread, and — unlike the JS version —
+   * automatically throttles them while the tab or element isn't being
+   * painted. Distance, duration and delay are tunable per element through
+   * the custom properties below.
+   */
+  .coc-float {
+    animation: coc-float var(--float-dur, 2.8s) ease-in-out var(--float-delay, 0s) infinite;
+    will-change: transform;
+  }
+
+  @keyframes coc-float {
+    0%, 100% { transform: translate3d(0, 0, 0); }
+    50% { transform: translate3d(0, calc(var(--float-dist, 5px) * -1), 0); }
+  }
+
+  /*
+   * Slow glow pulse for the blurred pedestal/aura elements, for the same
+   * reason as .coc-float above — a permanently animating blurred layer is
+   * expensive to drive from JS, and these render once per card.
+   */
+  .coc-pulse {
+    animation: coc-pulse var(--pulse-dur, 2s) ease-in-out infinite;
+    transform: scaleX(var(--pulse-scale, 1));
+    will-change: opacity;
+  }
+
+  @keyframes coc-pulse {
+    0%, 100% { opacity: var(--pulse-min, 0.35); }
+    50% { opacity: var(--pulse-max, 0.55); }
+  }
+
+  /* Respect an explicit OS-level request for less motion. */
+  @media (prefers-reduced-motion: reduce) {
+    .coc-float,
+    .coc-pulse {
+      animation: none;
+    }
+  }
+}
