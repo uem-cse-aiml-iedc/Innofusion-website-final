@@ -16,6 +16,8 @@ export interface Person {
   gender: "m" | "f";
   /** CSS object-position override for photos that need reframing within the card. Defaults to centered. */
   imagePosition?: string;
+  /** Optional per-photo crop adjustment for portraits that need a small reframing. */
+  imageTransform?: string;
 }
 
 export const ACCENTS = [
@@ -56,7 +58,10 @@ export const PersonCard = memo(({ person, troop, index }: { person: Person; troo
           loading="lazy"
           decoding="async"
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-          style={{ objectPosition: person.imagePosition ?? "50% 50%" }}
+          style={{
+            objectPosition: person.imagePosition ?? "50% 50%",
+            transform: person.imageTransform,
+          }}
         />
         {/* Scrim so the name + role stay legible over any photo. Taller and
             darker than before so a two-line designation never washes out. */}

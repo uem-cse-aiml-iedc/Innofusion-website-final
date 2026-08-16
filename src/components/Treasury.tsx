@@ -1,15 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Crown, Medal, Award, Sparkles, Brain, Shield, Cpu, Link, Cloud, Code2, Lightbulb, Settings, Bell } from "lucide-react";
-
-// Inline Venus icon
-const VenusIcon = ({ size = 24, style }: { size?: number; style?: React.CSSProperties }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" style={style}>
-    <circle cx="12" cy="9" r="6" />
-    <line x1="12" y1="15" x2="12" y2="22" />
-    <line x1="9" y1="19" x2="15" y2="19" />
-  </svg>
-);
+import { Crown, Medal, Award, Sparkles, Brain, Shield, Cpu, Link, Code2, Lightbulb, Settings, Bell } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 import SpecialPrizes from "@/components/SpecialPrizes";
 
@@ -63,10 +54,8 @@ const trackPrizes = [
   { id: 2, name: "Cybersecurity", short: "Cybersecurity", icon: Shield, color: "#3b82f6", prize: "₹3,000 + Premium Swags", troop: "P.E.K.K.A", img: "/characters/track-pekka.png" },
   { id: 3, name: "Robotics & IoT", short: "Robotics & IoT", icon: Cpu, color: "#06b6d4", prize: "₹3,000 + Premium Swags", troop: "Minion", img: "/characters/track-minion.png" },
   { id: 4, name: "Blockchain & Web3", short: "Blockchain", icon: Link, color: "#f59e0b", prize: "₹3,000 + Premium Swags", troop: "Barbarian King", img: "/characters/track-king.png" },
-  { id: 6, name: "Cloud & Infrastructure", short: "Cloud", icon: Cloud, color: "#38bdf8", prize: "₹3,000 + Premium Swags", troop: "Balloon", img: "/characters/track-balloon.png" },
-  { id: 7, name: "Web and App Development", short: "Web & App", icon: Code2, color: "#f97316", prize: "₹3,000 + Premium Swags", troop: "Dragon", img: "/characters/track-dragon.png" },
+  { id: 7, name: "Best Use of STUDIO1’s Partner Corsair AI Tool", short: "Corsair", icon: Code2, color: "#f97316", prize: "₹5,000 Track Prize Pool + PREMIUM SWAGS", troop: "Dragon", img: "/characters/track-dragon.png" },
   { id: 8, name: "Best Innovative Idea Team", short: "Innovation", icon: Lightbulb, color: "#eab308", prize: "₹3,000 + Premium Swags", troop: "Wizard", img: "/characters/track-wizard.png" },
-  { id: 9, name: "Best All Girls' Team", short: "All Girls", icon: VenusIcon, color: "#f43f5e", prize: "₹3,000 + Premium Swags", troop: "Night Witch", img: "/characters/track-nightwitch.png" },
   { id: 10, name: "Best Beginners' Team", short: "Beginners", icon: Award, color: "#10b981", prize: "₹3,000 + Premium Swags", troop: "Barbarian", img: "/characters/track-barbarian.png" },
 ];
 

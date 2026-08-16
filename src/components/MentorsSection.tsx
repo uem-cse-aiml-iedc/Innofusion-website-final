@@ -27,7 +27,7 @@ const MENTORS: Mentor[] = [
   // Remaining roster.
   { name: "Alik Agarwala", designation: "Software Engineer @ Amazon", image: "/mentors/alik-agarwala.webp", gender: "m" },
   { name: "Aniket Chakraborty", designation: "Founder @ Pujo Planner", image: "/mentors/aniket-chakraborty.webp", gender: "m" },
-  { name: "Avik Agarwala", designation: "AI Engineer @ Tata Consultancy Services", image: "/mentors/avik-agarwala.webp", gender: "m", imagePosition: "32% 50%" },
+  { name: "Avik Agarwala", designation: "AI Engineer @ Tata Consultancy Services", image: "/mentors/avik-agarwala.webp", gender: "m", imagePosition: "0% 50%", imageTransform: "scale(1.15) translateY(-6%)" },
   { name: "Devesh Tulshyan", designation: "Fullstack (AI + Cloud) Engineer @ TCS", image: "/mentors/devesh-tulshyan.webp", gender: "m" },
   { name: "Jyotirmoy Roy", designation: "Software Engineer @ Rezolve AI (Crownpeak)", image: "/mentors/jyotirmoy-roy.webp", gender: "m" },
   { name: "Jeevan Joshi", designation: "SDE Intern @ Amazon", image: "/mentors/jeevan-joshi.webp", gender: "m" },
