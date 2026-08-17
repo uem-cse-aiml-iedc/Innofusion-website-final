@@ -399,6 +399,11 @@ const Sponsors = () => {
       link: "https://innofusion-3.devfolio.co/"
     },
     {
+      name: "HackOS",
+      logo: "/Sponsers/hackos-logo.jpg",
+      link: "https://hackosqr.innofusion.tech/"
+    },
+    {
       name: "HackNest",
       logo: "/Sponsers/LogoTransparentBG.webp",
       //make it not clickable for now since the website is not live yet
@@ -427,6 +432,12 @@ const Sponsors = () => {
   // 🌐 COMMUNITY PARTNERS - Add new community partners here
   const communityPartners: Sponsor[] = [
     // { name: "Community Name", logo: "/Sponsers/community-logo.png", link: "https://community.com" },
+
+    {
+      name: "OSEN",
+      logo: "/Sponsers/osen-logo.png",
+      link: "#"
+    },
 
     {
       name: "Hacktropica"
