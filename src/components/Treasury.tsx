@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Crown, Medal, Award, Sparkles, Brain, Shield, Cpu, Link, Code2, Lightbulb, Settings, Bell } from "lucide-react";
+import { Crown, Medal, Award, Sparkles, Brain, Shield, Cpu, Link, Code2, Lightbulb, Palette, Settings, Bell } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 import SpecialPrizes from "@/components/SpecialPrizes";
 
@@ -54,6 +54,7 @@ const trackPrizes = [
   { id: 2, name: "Cybersecurity", short: "Cybersecurity", icon: Shield, color: "#3b82f6", prize: "₹3,000 + Premium Swags", troop: "P.E.K.K.A", img: "/characters/track-pekka.png" },
   { id: 3, name: "Robotics & IoT", short: "Robotics & IoT", icon: Cpu, color: "#06b6d4", prize: "₹3,000 + Premium Swags", troop: "Minion", img: "/characters/track-minion.png" },
   { id: 4, name: "Blockchain & Web3", short: "Blockchain", icon: Link, color: "#f59e0b", prize: "₹3,000 + Premium Swags", troop: "Barbarian King", img: "/characters/track-king.png" },
+  { id: 6, name: "Best UI/UX Team", short: "UI/UX", icon: Palette, color: "#38bdf8", prize: "₹3,000 +PREMIUM SWAGS", troop: "Balloon", img: "/characters/track-balloon.png" },
   { id: 7, name: "Best Use of STUDIO1’s Partner Corsair AI Tool", short: "Corsair", icon: Code2, color: "#f97316", prize: "₹5,000 Track Prize Pool + PREMIUM SWAGS", troop: "Dragon", img: "/characters/track-dragon.png" },
   { id: 8, name: "Best Innovative Idea Team", short: "Innovation", icon: Lightbulb, color: "#eab308", prize: "₹3,000 + Premium Swags", troop: "Wizard", img: "/characters/track-wizard.png" },
   { id: 10, name: "Best Beginners' Team", short: "Beginners", icon: Award, color: "#10b981", prize: "₹3,000 + Premium Swags", troop: "Barbarian", img: "/characters/track-barbarian.png" },
