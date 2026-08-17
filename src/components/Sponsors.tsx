@@ -97,6 +97,7 @@ const SponsorCard: React.FC<SponsorCardProps> = ({
 }) => {
   const isNavigable = sponsor.link && sponsor.link !== "#";
   const key = logoKey(sponsor.logo);
+  const usesHackOSPlatformFront = whiteFront && key === "hackos-logo";
   const needsPlate = !whiteFront && !renderFrontContent && NEEDS_LIGHT_PLATE.has(key);
   const isDarkTile = !whiteFront && !renderFrontContent && DARK_TILE.has(key);
 
@@ -112,14 +113,18 @@ const SponsorCard: React.FC<SponsorCardProps> = ({
         className={`absolute inset-0 rounded-2xl border ${borderClass} overflow-hidden`}
         style={{
           background: whiteFront
-            ? "rgba(255,255,255,0.88)"
+            ? usesHackOSPlatformFront
+              ? "#fff"
+              : "rgba(255,255,255,0.88)"
             : translucent(frontBg, 0.22),
           backdropFilter: "blur(14px)",
           WebkitBackdropFilter: "blur(14px)",
           boxShadow: "inset 0 1px 0 rgba(255,255,255,0.08)",
         }}
       >
-        <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-black/10" />
+        {!usesHackOSPlatformFront && (
+          <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-black/10" />
+        )}
         <div className={`relative z-10 flex items-center justify-center ${logoHeightClass} w-full h-full px-6`}>
           {renderFrontContent ? renderFrontContent() : needsPlate ? (
             /* Dark-ink logo: sit it on a frosted light plate so it stays legible
@@ -303,6 +308,11 @@ const Sponsors = () => {
       logo: "/Sponsers/CodeCrafters.webp",
       link: "https://codecrafters.io/",
       description: "Top 3 teams win VIP memberships ($360/yr): 🥇 2-year, 🥈 1-year, 🥉 6-month — build Git, Docker & SQLite from scratch."
+    },
+    {
+      name: "Algorand",
+      logo: "/Sponsers/Algorand.webp",
+      link: "https://algorand.co/"
     }
 
   ];
@@ -310,11 +320,6 @@ const Sponsors = () => {
   // 🛡️ CHAMPION SPONSORS - Add new champion sponsors here
   const championSponsors: Sponsor[] = [
     // { name: "Company Name", logo: "/Sponsers/logo.png", link: "https://company.com" },
-    {
-      name: "OSEN",
-      logo: "/Sponsers/osen-logo.png",
-      link: "#"
-    },
     {
       name: "Edubuk",
       logo: "/Sponsers/Edubuk.webp",
@@ -355,14 +360,14 @@ const Sponsors = () => {
       link: "https://www.myradhq.xyz/dashboard"
     },
     {
-      name: "Algorand",
-      logo: "/Sponsers/Algorand.webp",
-      link: "https://algorand.co/"
-    },
-    {
       name: "Myrad",
       logo: "/Sponsers/Myrad.webp",
       link: "https://www.agent-mesh.app/"
+    },
+    {
+      name: "OSEN",
+      logo: "/Sponsers/osen-logo.png",
+      link: "#"
     },
 
 
@@ -405,7 +410,7 @@ const Sponsors = () => {
     },
     {
       name: "HackOS",
-      logo: "/Sponsers/hackos-logo.jpg",
+      logo: "/Sponsers/hackos-logo.png",
       link: "https://hackosqr.innofusion.tech/"
     },
     {
