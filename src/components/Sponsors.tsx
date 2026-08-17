@@ -311,6 +311,11 @@ const Sponsors = () => {
   const championSponsors: Sponsor[] = [
     // { name: "Company Name", logo: "/Sponsers/logo.png", link: "https://company.com" },
     {
+      name: "OSEN",
+      logo: "/Sponsers/osen-logo.png",
+      link: "#"
+    },
+    {
       name: "Edubuk",
       logo: "/Sponsers/Edubuk.webp",
       link: "https://edubuk.com/",
@@ -432,12 +437,6 @@ const Sponsors = () => {
   // 🌐 COMMUNITY PARTNERS - Add new community partners here
   const communityPartners: Sponsor[] = [
     // { name: "Community Name", logo: "/Sponsers/community-logo.png", link: "https://community.com" },
-
-    {
-      name: "OSEN",
-      logo: "/Sponsers/osen-logo.png",
-      link: "#"
-    },
 
     {
       name: "Hacktropica"
