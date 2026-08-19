@@ -149,7 +149,7 @@ const SponsorCard: React.FC<SponsorCardProps> = ({
             <img
               src={sponsor.logo}
               alt={sponsor.name}
-              className={`max-h-[80%] max-w-full object-contain ${
+              className={`max-h-[90%] max-w-full object-contain ${
                 isDarkTile ? "rounded-xl" : ""
               }`}
               style={{
@@ -367,7 +367,8 @@ const Sponsors = () => {
     {
       name: "Pujo Planner",
       logo: "/Sponsers/pujoplanner.png",
-      link: "https://www.pujoplanner.com/"
+      link: "https://www.pujoplanner.com/",
+      description: "₹2,500 and mementos awarded directly to the winning team"
     },
     {
       name: "OSEN",
@@ -385,7 +386,7 @@ const Sponsors = () => {
       name: "Keploy",
       logo: "/Sponsers/keploy.webp",
       link: "https://www.keploy.io/",
-      description: "Exclusive API testing credits during the hacking period + official Keploy Gift Hamper (T-shirt & swag) for Web/App and Cloud track winners."
+      description: "Access to exclusive API testing credits for the winning teams on the Keploy platform to build and test projects efficiently"
     },
     {
       name: ".XYZ",

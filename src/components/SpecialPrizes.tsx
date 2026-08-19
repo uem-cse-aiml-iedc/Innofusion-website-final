@@ -105,7 +105,7 @@ const BountyCard: React.FC<{ prize: SpecialPrize; index: number }> = ({ prize, i
             <img
               src={prize.logo}
               alt={prize.name}
-              className={`max-h-[72px] max-w-[75%] object-contain ${isDarkTile ? "rounded-lg" : ""}`}
+              className={`max-h-[78px] max-w-[85%] object-contain ${isDarkTile ? "rounded-lg" : ""}`}
               loading="lazy"
               decoding="async"
               style={
@@ -240,7 +240,7 @@ const SpecialPrizes = () => {
       logo: "/Sponsers/keploy.webp",
       link: "https://www.keploy.io/",
       description:
-        "Exclusive API testing credits + official Keploy Gift Hamper (T-shirt & swag) for Web/App and Cloud track winners.",
+        "Access to exclusive API testing credits for the winning teams on the Keploy platform to build and test projects efficiently",
       themeColor: "#22c55e",
     },
     {
@@ -266,6 +266,14 @@ const SpecialPrizes = () => {
       description:
         "$50 prize pool for the top 4 winning teams, focusing on x402 and agentic commerce development + swags.",
       themeColor: "#00d4a0",
+    },
+    {
+      name: "Pujo Planner",
+      logo: "/Sponsers/pujoplanner.png",
+      link: "https://www.pujoplanner.com/",
+      description:
+        "₹2,500 and mementos awarded directly to the winning team",
+      themeColor: "#e11d48",
     },
   ];
 
