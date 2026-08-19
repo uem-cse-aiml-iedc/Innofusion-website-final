@@ -365,6 +365,11 @@ const Sponsors = () => {
       link: "https://www.agent-mesh.app/"
     },
     {
+      name: "Pujo Planner",
+      logo: "/Sponsers/pujoplanner.png",
+      link: "https://www.pujoplanner.com/"
+    },
+    {
       name: "OSEN",
       logo: "/Sponsers/osen-logo.png",
       link: "#"

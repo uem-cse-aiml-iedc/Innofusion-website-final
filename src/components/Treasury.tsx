@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Crown, Medal, Award, Sparkles, Brain, Shield, Cpu, Link, Code2, Lightbulb, Palette, Settings, Bell } from "lucide-react";
+import { Crown, Medal, Award, Sparkles, Brain, Shield, Cpu, Link, Code2, Lightbulb, Palette, Settings, Bell, Rocket } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 import SpecialPrizes from "@/components/SpecialPrizes";
 
@@ -58,6 +58,7 @@ const trackPrizes = [
   { id: 7, name: "Best Use of STUDIO1’s Partner Corsair AI Tool", short: "Corsair", icon: Code2, color: "#f97316", prize: "₹5,000 Track Prize Pool + PREMIUM SWAGS", troop: "Dragon", img: "/characters/track-dragon.png" },
   { id: 8, name: "Best Innovative Idea Team", short: "Innovation", icon: Lightbulb, color: "#eab308", prize: "₹3,000 + Premium Swags", troop: "Wizard", img: "/characters/track-wizard.png" },
   { id: 10, name: "Best Beginners' Team", short: "Beginners", icon: Award, color: "#10b981", prize: "₹3,000 + Premium Swags", troop: "Barbarian", img: "/characters/track-barbarian.png" },
+  { id: 5, name: "Best Startup Idea", short: "Startup", icon: Rocket, color: "#ec4899", prize: "₹2,500 + PREMIUM SWAGS", troop: "Master Builder", img: "/characters/sp-builder.png" },
 ];
 
 /*
